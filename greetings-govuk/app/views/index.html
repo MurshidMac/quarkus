@@ -1,25 +1,31 @@
 {% extends "layout.html" %}
 
 {% block pageTitle %}
-GOV.UK with Quarkus.io
+Quarkus.io & Ballerina.io
 {% endblock %}
 
 {% block content %}
 
 <div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds">
+  <div class="govuk-grid-column-full">
     <h1 class="govuk-heading-xl">
-      The GOV.UK Prototype Kit with Quarkus.io
+      Quarkus and Ballerina
     </h1>{{releaseVersion | log }}
 
-    <h2 class="govuk-heading-m">API Consumed from Quarkus.io</h2>
+    <h2 class="govuk-heading-m">API Consumed from <a href="http://quarkus.io">Quarkus.io</a> and <a
+        href="https://ballerina.io">Ballerina.io</a></h2>
 
-    <button type="submit" class="govuk-button govuk-!-margin-right-1" onclick="getValue()">
-      Test Api
+    <button type="submit" class="govuk-button govuk-!-margin-right-1" onclick="QuarkusApi()">
+      Click to Test Quarkus Api
     </button>
+    <button type="submit" class="govuk-button govuk-!-margin-right-1" onclick="BallerinaApi()">
+      Click to Test Ballerina Api
+    </button>
+    
+
     <div class="govuk-form-group">
       <label class="govuk-label" for="event-name">
-        Quarkus Output
+        Api Output
       </label>
       <input class="govuk-input" id="event-name" name="event-name" type="text">
     </div>
@@ -32,28 +38,33 @@ GOV.UK with Quarkus.io
         </a>
       </li>
     </ul>
+    <script src="./service.js"></script>
+    <script>
+
+      function QuarkusApi() {
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+          if (this.readyState == 4 && this.status == 200) {
+            document.getElementById("event-name").value = xhttp.responseText;
+            console.log('Testing ', xhttp.responseText)
+          }
+        };
+        xhttp.open("GET", "http://localhost:3000/api/quarkus", true);
+        xhttp.send();
+      }
+
+      function BallerinaApi() {
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+          if (this.readyState == 4 && this.status == 200) {
+            document.getElementById("event-name").value = xhttp.responseText;
+            console.log('Testing ', xhttp.responseText)
+          }
+        };
+        xhttp.open("GET", "http://localhost:3000/api/ballerina", true);
+        xhttp.send();
+      }
+    </script>
   </div>
 </div>
 {% endblock %}
-
-<script>
-
-  const axios = require('axios');
-  function getValue() {
-    return axios.get('http://localhost:3000/hello')
-      .then(function (response) {
-        // handle success
-        console.log(response);
-        return response;
-      })
-      .catch(function (error) {
-        // handle error
-        console.log(error);
-        return "error"
-      })
-      .finally(function () {
-        // always executed
-      });
-  }
-
-</script>

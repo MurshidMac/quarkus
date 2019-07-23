@@ -4,7 +4,7 @@
 
 module.exports = {
   // Service name used in header. Eg: 'Renew your passport'
-  serviceName: 'Hello from Quarkus.io',
+  serviceName: 'Hello from Quarkus.io & Ballerina.io',
 
   // Default port that prototype runs on
   port: '3000',

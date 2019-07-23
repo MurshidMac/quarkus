@@ -335,6 +335,20 @@ app.get('/api/quarkus', function(req, res){
     })
 });
 
+
+app.get('/api/ballerina', function(req, res){
+  restclient.call('http://localhost:9090/hello/sayHello')
+    .then(response => {
+        console.log('response', response);
+        res.json(response)
+    })
+    .catch(error => {
+        console.log(error);
+        res.send(error)
+    })
+});
+
+
 // Redirect all POSTs to GETs - this allows users to use POST for autoStoreData
 app.post(/^\/([^.]+)$/, function (req, res) {
   res.redirect('/' + req.params[0])
