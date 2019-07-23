@@ -24,6 +24,8 @@ const packageJson = require('./package.json')
 const routes = require('./app/routes.js')
 const utils = require('./lib/utils.js')
 const extensions = require('./lib/extensions/extensions.js')
+const restclient = require('./app/restclient.js');
+
 
 // Variables for v6 backwards compatibility
 // Set false by default, then turn on if we find /app/v6/routes.js
@@ -319,6 +321,19 @@ if (useV6) {
     utils.matchRoutes(req, res, next)
   })
 }
+
+
+app.get('/api/quarkus', function(req, res){
+  restclient.call('http://localhost:8080/hello')
+    .then(response => {
+        console.log('response', response);
+        res.json(response)
+    })
+    .catch(error => {
+        console.log(error);
+        res.send(error)
+    })
+});
 
 // Redirect all POSTs to GETs - this allows users to use POST for autoStoreData
 app.post(/^\/([^.]+)$/, function (req, res) {
